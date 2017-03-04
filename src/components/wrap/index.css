@@ -1,0 +1,43 @@
+
+.vertical:before {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.topBar {
+  position: relative;
+  height: 50px;
+  padding: 0 50px;
+  border-bottom: 1px solid #ccc;
+}
+
+.content {
+  width: 80%;
+  margin: 40px auto;
+}
+
+.btn {
+  display: inline-block;
+  padding: 4px 6px;
+  margin: 4px;
+  background-color: #333;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.crop-placeholder {
+  width: 400px;
+  padding: 40px 0;
+  margin: 30px auto;
+  background-color: #ddd;
+  font-size: 26px;
+  color: #999;
+  text-align: center;
+  cursor: pointer;
+}
