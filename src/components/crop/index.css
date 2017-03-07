@@ -5,7 +5,7 @@
 }
 
 .img-bg {
-  width: 100%;
+  max-width: 100%;
   opacity: .4;
 }
 
@@ -23,6 +23,8 @@
   height: 100%;
   box-sizing: border-box;
   border: 1px solid #4caf50;
+  background-repeat: no-repeat;
+  cursor: move;
 }
 
 .img-grid-line {
@@ -35,4 +37,8 @@
   width: 10px;
   height: 10px;
   background-color: #4caf50
+}
+
+.img-grid-btn-center {
+  composes: img-grid-btn;
 }

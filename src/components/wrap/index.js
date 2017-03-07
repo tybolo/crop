@@ -34,7 +34,7 @@ export default class Wrap extends Component {
               onChange={this.getImg.bind(this)}/>
           </label>
           <a className={styles.btn} onClick={this.save.bind(this)}>确定</a>
-          <a className={styles.btn} download="a.jpg" onClick={this.download.bind(this)}>另存为</a>
+          <a className={styles.btn} download="a.jpg" onClick={this.open.bind(this)}>另存为</a>
         </div>
         <div className={styles.content}>
           { crop }
@@ -79,5 +79,10 @@ export default class Wrap extends Component {
     a.innerHTML = 'dsadsa'
     // document.body.appendChild(a)
     a.click()
+  }
+
+  open() {
+    const dataUrl = this.refs.imgCrop.getDataUrl()
+    window.open(dataUrl)
   }
 }
