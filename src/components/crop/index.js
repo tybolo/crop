@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import styles from './index.css'
 
 export default class Crop extends Component {
-  constructor() {
+  constructor(props) {
     super()
 
     this.mouseEvent = null
@@ -16,6 +16,8 @@ export default class Crop extends Component {
       img: null,
       canvas: null,
       ctx: null,
+      width: undefined,
+      height: undefined,
       drawCfg: {
         width: 300,
         height: 300,
@@ -39,9 +41,8 @@ export default class Crop extends Component {
     return (
       <div className={styles.wrap} ref="wrap"
         style={{
-          width: state.width + 'px',
-          height: state.height + 'px',
-          margin: '0 auto'
+          width: state.width ? state.width + 'px' : state.width,
+          height: state.height ? state.height + 'px' : state.height
         }}>
         <img
           ref="img"
@@ -132,6 +133,13 @@ export default class Crop extends Component {
     })
   }
 
+  componentWillReceiveProps() {
+    this.setState({
+      width: undefined,
+      height: undefined
+    })
+  }
+
   getDrawCfg() {
     const drawCfg = this.state.drawCfg
     const img = this.state.img
@@ -170,8 +178,8 @@ export default class Crop extends Component {
     e.stopPropagation()
     e.preventDefault()
 
-    this.mouse.x = e.screenX
-    this.mouse.y = e.screenY
+    this.mouse.x = e.pageX
+    this.mouse.y = e.pageY
 
     this.mouseEvent = callback
     document.body.addEventListener('mousemove', (e) => {
@@ -186,11 +194,11 @@ export default class Crop extends Component {
     if (!this.mouseEvent) return
     e.preventDefault()
 
-    const x = e.screenX - this.mouse.x
-    const y = e.screenY - this.mouse.y
+    const x = e.pageX - this.mouse.x
+    const y = e.pageY - this.mouse.y
 
-    this.mouse.x = e.screenX
-    this.mouse.y = e.screenY
+    this.mouse.x = e.pageX
+    this.mouse.y = e.pageY
 
     this.mouseEvent({x, y})
   }
@@ -230,117 +238,133 @@ export default class Crop extends Component {
     })
   }
 
-  // topLMove(pos) {
-  //   this.topMove(pos)
-  //   this.leftMove(pos)
-  // }
   topLMove(pos) {
-    const drawCfg = this.state.drawCfg
-    let sy = drawCfg.sy + pos.y
-    let sx = drawCfg.sx + pos.x
-    let width = drawCfg.width - pos.x
-    let height = drawCfg.height - pos.y
-
-    if (sx < 0) {
-      sx = drawCfg.sx
-      width = drawCfg.width
-    }
-    if (sy < 0) {
-      sy = drawCfg.sy
-      height = drawCfg.height
-    }
-    if (width < this.minSize) {
-      sx = drawCfg.sx
-      width = drawCfg.width
-    }
-    if (height < this.minSize) {
-      sy = drawCfg.sy
-      height = drawCfg.height
-    }
-
-    this.setPos({
-      sy : sy,
-      sx : sx,
-      width: width,
-      height: height
-    })
+    this.topMove(pos)
+    this.leftMove(pos)
   }
 
   topRMove(pos) {
-    const drawCfg = this.state.drawCfg
-    let sy = drawCfg.sy + pos.y
-    let width = drawCfg.width + pos.x
-    let height = drawCfg.height - pos.y
-    const maxWidth = this.state.width - drawCfg.sx
-
-    if (sy < 0) {
-      sy = drawCfg.sy
-      height = drawCfg.height
-    }
-    if (width > maxWidth) width = maxWidth
-    if (width < this.minSize) {
-      width = this.minSize
-    }
-    if (height < this.minSize) {
-      sy = drawCfg.sy
-      height = this.minSize
-    }
-
-    this.setPos({
-      sy: sy,
-      width: width,
-      height: height
-    })
+    this.topMove(pos)
+    this.rightMove(pos)
   }
 
   bottomLMove(pos) {
-    const drawCfg = this.state.drawCfg
-    let sx = drawCfg.sx + pos.x
-    let height = drawCfg.height + pos.y
-    let width = drawCfg.width - pos.x
-    const maxHeight = this.state.height - drawCfg.sy
-
-    if (sx < 0) {
-      sx = drawCfg.sx
-      width = drawCfg.width
-    }
-    if (height > maxHeight) height = maxHeight
-    if (width < this.minSize) {
-      sx = drawCfg.sx
-      width = drawCfg.width
-    }
-    if (height < this.minSize) {
-      height = this.minSize
-    }
-
-    this.setPos({
-      sx: sx,
-      height: height,
-      width: width,
-    })
+    this.bottomMove(pos)
+    this.leftMove(pos)
   }
 
   bottomRMove(pos) {
-    const drawCfg = this.state.drawCfg
-    let width = drawCfg.width + pos.x
-    let height = drawCfg.height + pos.y
-    const maxWidth = this.state.width - drawCfg.sx
-    const maxHeight = this.state.height - drawCfg.sy
-
-    if (width > maxWidth) width = maxWidth
-    if (height > maxHeight) height = maxHeight
-    if (width < this.minSize) {
-      width = this.minSize
-    }
-    if (height < this.minSize) {
-      height = this.minSize
-    }
-
-    this.setPos({
-      height,
-      width,
-    })
+    this.bottomMove(pos)
+    this.rightMove(pos)
   }
+
+  // topLMove(pos) {
+  //   const drawCfg = this.state.drawCfg
+  //   let sy = drawCfg.sy + pos.y
+  //   let sx = drawCfg.sx + pos.x
+  //   let width = drawCfg.width - pos.x
+  //   let height = drawCfg.height - pos.y
+
+  //   if (sx < 0) {
+  //     sx = drawCfg.sx
+  //     width = drawCfg.width
+  //   }
+  //   if (sy < 0) {
+  //     sy = drawCfg.sy
+  //     height = drawCfg.height
+  //   }
+  //   if (width < this.minSize) {
+  //     sx = drawCfg.sx
+  //     width = drawCfg.width
+  //   }
+  //   if (height < this.minSize) {
+  //     sy = drawCfg.sy
+  //     height = drawCfg.height
+  //   }
+
+  //   this.setPos({
+  //     sy : sy,
+  //     sx : sx,
+  //     width: width,
+  //     height: height
+  //   })
+  // }
+
+  // topRMove(pos) {
+  //   const drawCfg = this.state.drawCfg
+  //   let sy = drawCfg.sy + pos.y
+  //   let width = drawCfg.width + pos.x
+  //   let height = drawCfg.height - pos.y
+  //   const maxWidth = this.state.width - drawCfg.sx
+
+  //   if (sy < 0) {
+  //     sy = drawCfg.sy
+  //     height = drawCfg.height
+  //   }
+  //   if (width > maxWidth) width = maxWidth
+  //   if (width < this.minSize) {
+  //     width = this.minSize
+  //   }
+  //   if (height < this.minSize) {
+  //     sy = drawCfg.sy
+  //     height = this.minSize
+  //   }
+
+  //   this.setPos({
+  //     sy: sy,
+  //     width: width,
+  //     height: height
+  //   })
+  // }
+
+  // bottomLMove(pos) {
+  //   const drawCfg = this.state.drawCfg
+  //   let sx = drawCfg.sx + pos.x
+  //   let height = drawCfg.height + pos.y
+  //   let width = drawCfg.width - pos.x
+  //   const maxHeight = this.state.height - drawCfg.sy
+
+  //   if (sx < 0) {
+  //     sx = drawCfg.sx
+  //     width = drawCfg.width
+  //   }
+  //   if (height > maxHeight) height = maxHeight
+  //   if (width < this.minSize) {
+  //     sx = drawCfg.sx
+  //     width = drawCfg.width
+  //   }
+  //   if (height < this.minSize) {
+  //     height = this.minSize
+  //   }
+
+  //   this.setPos({
+  //     sx: sx,
+  //     height: height,
+  //     width: width,
+  //   })
+  // }
+
+  // bottomRMove(pos) {
+  //   const drawCfg = this.state.drawCfg
+  //   let width = drawCfg.width + pos.x
+  //   let height = drawCfg.height + pos.y
+  //   const maxWidth = this.state.width - drawCfg.sx
+  //   const maxHeight = this.state.height - drawCfg.sy
+
+  //   if (width > maxWidth) width = maxWidth
+  //   if (height > maxHeight) height = maxHeight
+  //   if (width < this.minSize) {
+  //     width = this.minSize
+  //   }
+  //   if (height < this.minSize) {
+  //     height = this.minSize
+  //   }
+
+  //   this.setPos({
+  //     height,
+  //     width,
+  //   })
+  // }
 
   topMove(pos) {
     const drawCfg = this.state.drawCfg

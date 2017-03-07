@@ -30,6 +30,7 @@ export default class Wrap extends Component {
             <input
               ref="file"
               type="file"
+              accept="image/*"
               style={{display: 'none'}}
               onChange={this.getImg.bind(this)}/>
           </label>
