@@ -25,17 +25,16 @@ export default class Wrap extends Component {
     return (
       <div>
         <div className={styles.topBar + ' ' + styles.vertical}>
-          <label style={{display: 'inline-block'}}>
-            <a className={styles.btn}>选择图片</a>
-            <input
-              ref="file"
-              type="file"
-              accept="image/*"
-              style={{display: 'none'}}
-              onChange={this.getImg.bind(this)}/>
-          </label>
+          <input
+            ref="file"
+            type="file"
+            accept="image/*"
+            style={{display: 'none'}}
+            onChange={this.getImg.bind(this)}/>
+          <a className={styles.btn} onClick={this.selectImg.bind(this)}>选择图片</a>
           <a className={styles.btn} onClick={this.save.bind(this)}>确定</a>
-          <a className={styles.btn} download="a.jpg" onClick={this.open.bind(this)}>另存为</a>
+          <a className={styles.btn} onClick={this.download.bind(this)}>另存为</a>
+          <a className={styles.btn} onClick={this.open.bind(this)}>新窗口中打开</a>
         </div>
         <div className={styles.content}>
           { crop }
@@ -74,12 +73,12 @@ export default class Wrap extends Component {
   download() {
     const dataUrl = this.refs.imgCrop.getDataUrl()
     const a = document.createElement('a')
-    // window.open(dataUrl)
+    a.style.display = 'none'
     a.href = dataUrl
-    a.download = 'a.png'
-    a.innerHTML = 'dsadsa'
-    // document.body.appendChild(a)
+    a.download = 'image.png'
+    document.body.appendChild(a)
     a.click()
+    document.body.removeChild(a)
   }
 
   open() {
