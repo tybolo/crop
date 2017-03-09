@@ -28,6 +28,10 @@
 .topBar-btn:hover {
   color: #ccc;
 }
+.topBar-btn.disabled {
+  color: #4fc3f7;
+  cursor: default;
+}
 
 .content {
   width: 80%;

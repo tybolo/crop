@@ -48,13 +48,13 @@ export default class Crop extends Component {
           ref="img"
           src={this.props.src}
           className={styles['img-bg']}
-          style={{display: this.props.src ? 'block' : 'none'}}
+          style={{opacity: !this.props.isCrop && 1}}
           onLoad={this.getDrawCfg.bind(this)}/>
         <div
           className={styles['img-grid']}
           onMouseDown={(e) => this.mouseDown(e, this.move)}
           style={{
-            display: this.props.src ? 'block' : 'none',
+            display: this.props.src && this.props.isCrop ? 'block' : 'none',
             left: drawCfg.sx + 'px',
             top: drawCfg.sy + 'px',
             width: drawCfg.width+'px',
@@ -133,7 +133,8 @@ export default class Crop extends Component {
     })
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.src === this.props.src) return
     this.setState({
       width: undefined,
       height: undefined
@@ -336,5 +337,10 @@ export default class Crop extends Component {
 }
 
 Crop.propTypes = {
-  src: PropTypes.string.isRequired
+  src: PropTypes.string.isRequired,
+  isCrop: PropTypes.bool
+}
+
+Crop.defaultProps = {
+  isCrop: true
 }
