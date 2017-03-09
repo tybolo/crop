@@ -69,11 +69,17 @@ export default class Wrap extends Component {
   getDataURL(file) {
     const reader = new FileReader()
     reader.onload = () => {
-      this.setState({
-        dataURL: reader.result
-      })
+      this.initImg(reader.result)
     }
     reader.readAsDataURL(file)
+  }
+
+  initImg(dataURL) {
+    this.setState({
+      dataURL: dataURL,
+      isCrop: true,
+      history: []
+    })
   }
 
   crop() {
