@@ -1,9 +1,14 @@
+var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var path = require('path')
 
+var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
+var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
+
 module.exports = {
   entry: {
-    app: path.resolve(__dirname, './src/App.js')
+    app: path.resolve(__dirname, './src/App.js'),
+    vendor: ['react']
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -27,9 +32,13 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './src/Index.html'),
-      filename: 'index.html',
+      filename: path.resolve(__dirname, 'index.html'),
       inject: true,
-      chunks: ['app']
+      chunks: ['vendor', 'app']
+    }),
+    new CommonsChunkPlugin('vendor'),
+    new UglifyJsPlugin({
+      compress: { warnings: false }
     })
   ]
 }
