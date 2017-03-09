@@ -25,20 +25,20 @@ export default class Wrap extends Component {
     return (
       <div>
         <div className={styles.topBar + ' ' + styles.vertical}>
-          <input
-            ref="file"
-            type="file"
-            accept="image/*"
-            style={{display: 'none'}}
-            onChange={this.getImg.bind(this)}/>
-          <a className={styles.btn} onClick={this.selectImg.bind(this)}>选择图片</a>
-          <a className={styles.btn} onClick={this.save.bind(this)}>确定</a>
-          <a className={styles.btn} onClick={this.download.bind(this)}>另存为</a>
-          <a className={styles.btn} onClick={this.open.bind(this)}>新窗口中打开</a>
+          <a className={styles['topBar-btn']} onClick={this.selectImg.bind(this)}>选择图片</a>
+          <a className={styles['topBar-btn']} onClick={this.save.bind(this)}>确定</a>
+          <a className={styles['topBar-btn']} onClick={this.download.bind(this)}>另存为</a>
+          <a className={styles['topBar-btn']} onClick={this.open.bind(this)}>新窗口中打开</a>
         </div>
         <div className={styles.content}>
           { crop }
         </div>
+        <input
+          ref="file"
+          type="file"
+          accept="image/*"
+          style={{display: 'none'}}
+          onChange={this.getImg.bind(this)}/>
       </div>
     )
   }
