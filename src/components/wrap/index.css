@@ -40,11 +40,12 @@
 
 .crop-placeholder {
   width: 400px;
-  padding: 40px 0;
-  margin: 30px auto;
-  background-color: #ddd;
+  padding: 60px 0;
+  margin: 140px auto;
+  background-color: #4fc3f7;
   font-size: 26px;
-  color: #999;
+  color: #fff;
   text-align: center;
   cursor: pointer;
+  border-radius: 2px;
 }

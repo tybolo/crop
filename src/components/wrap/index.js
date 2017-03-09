@@ -88,7 +88,7 @@ export default class Wrap extends Component {
     this.setState({
       isCrop: false,
       dataURL: dataURL,
-      history: this.state.history.concat([history])
+      history: history === dataURL ? this.state.history : this.state.history.concat([history])
     })
   }
 
