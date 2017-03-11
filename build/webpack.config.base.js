@@ -1,6 +1,8 @@
+var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var autoprefixer = require('autoprefixer')
 var path = require('path')
+
+var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin
 
 module.exports = {
   entry: {
@@ -17,15 +19,17 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.css$/, loader: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]']
-      }) },
-      // { test: /\.(scss|sass)$/, loader: ExtractTextPlugin.extract({
-      //   fallback: 'style-loader',
-      //   use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'posecss-loader']
-      // }'style', 'css!postcss!sass') }
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]']
+        })
+      }
     ]
   },
-  // postcss: [ autoprefixer({ browsers: ['last 4 versions', '> 10%'] }) ]
+  plugins: [
+    new CommonsChunkPlugin('vendor'),
+    new ExtractTextPlugin('css/[name].[hash].css')
+  ]
 }
