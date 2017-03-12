@@ -1,6 +1,7 @@
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var path = require('path')
+var CleanWebpackPlugin = require('clean-webpack-plugin')
 
 var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin
 
@@ -11,6 +12,10 @@ var webpackBuildCfg = Object.assign({}, webpackBaseCfg, {
     filename: 'js/[name].[hash].js'
   },
   plugins: webpackBaseCfg.plugins.concat([
+    new CleanWebpackPlugin(['dist'], {
+      root: path.resolve(__dirname, '../'),
+      "verbose": true, // Write logs to console.
+    }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: path.resolve(__dirname, '../index.html'),
