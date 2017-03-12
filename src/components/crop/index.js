@@ -170,9 +170,24 @@ export default class Crop extends Component {
     const canvas = state.canvas
     const drawCfg = state.drawCfg
 
-    canvas.width = drawCfg.width / drawCfg.ratio
-    canvas.height = drawCfg.height / drawCfg.ratio
-    state.ctx.drawImage(state.img, drawCfg.sx / drawCfg.ratio, drawCfg.sy / drawCfg.ratio, drawCfg.sWidth, drawCfg.sHeight, drawCfg.dx, drawCfg.dy, drawCfg.dWidth, drawCfg.dHeight)
+    const sx = Math.floor(drawCfg.sx / drawCfg.ratio)
+    const sy = Math.floor(drawCfg.sy / drawCfg.ratio)
+
+    canvas.width = Math.floor(drawCfg.width / drawCfg.ratio)
+    canvas.height = Math.floor(drawCfg.height / drawCfg.ratio)
+
+    // 当sx+sWidth大于原图片的宽度或sy+sHeight大于原图片的高度时，safari会出现空白
+    state.ctx.drawImage(
+      state.img,
+      sx,
+      sy,
+      canvas.width,
+      canvas.height,
+      drawCfg.dx,
+      drawCfg.dy,
+      canvas.width,
+      canvas.height
+    )
   }
 
   mouseDown(e, callback) {
