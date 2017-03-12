@@ -10,7 +10,7 @@ var webpackBuildCfg = Object.assign({}, webpackBaseCfg, {
     path: path.resolve(__dirname, '../dist'),
     filename: 'js/[name].[hash].js'
   },
-  plugins: [
+  plugins: webpackBaseCfg.plugins.concat([
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: path.resolve(__dirname, '../index.html'),
@@ -18,7 +18,7 @@ var webpackBuildCfg = Object.assign({}, webpackBaseCfg, {
       chunks: ['vendor', 'app']
     }),
     new UglifyJsPlugin({compress: {warnings: false}})
-  ]
+  ])
 })
 
 module.exports = webpackBuildCfg
