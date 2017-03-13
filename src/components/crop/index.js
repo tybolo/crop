@@ -53,6 +53,7 @@ export default class Crop extends Component {
         <div
           className={styles['img-grid']}
           onMouseDown={(e) => this.mouseDown(e, this.move)}
+          onDoubleClick={this.props.dbClickHandle || null}
           style={{
             display: this.props.src && this.props.isCrop ? 'block' : 'none',
             left: drawCfg.sx + 'px',
@@ -348,12 +349,12 @@ export default class Crop extends Component {
     this.drawImg()
     return this.state.canvas.toDataURL()
   }
-
 }
 
 Crop.propTypes = {
   src: PropTypes.string.isRequired,
-  isCrop: PropTypes.bool
+  isCrop: PropTypes.bool,
+  dbClickHandle: PropTypes.func
 }
 
 Crop.defaultProps = {

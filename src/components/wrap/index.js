@@ -18,7 +18,8 @@ export default class Wrap extends Component {
         width="800"
         ref="imgCrop"
         src={this.state.dataURL}
-        isCrop={this.state.isCrop}/>
+        isCrop={this.state.isCrop}
+        dbClickHandle={(e) => this.save()}/>
     ) : (
       <div
         onClick={this.selectImg.bind(this)}
