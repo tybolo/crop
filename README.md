@@ -1,12 +1,7 @@
 # 图片裁剪PC版
 
-**LINK** -- [tybolo.github.io/crop](https://tybolo.github.io/crop)
+> DEMO：[tybolo.github.io/crop](https://tybolo.github.io/crop)
 
-
-
-### start
-1. git clone https://github.com/tybolo/crop.git
-2. cd crop
-3. npm install
-4. npm run dev
-5. open http://localhost:8080/ in browser
+- 图片裁剪小应用，支持pc端
+- 采用react编写的图片裁剪组件
+- 支持裁剪区域选择，撤销，保存，预览等操作
