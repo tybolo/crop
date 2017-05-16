@@ -227,10 +227,10 @@ export default class Crop extends Component {
     let sy = pos.sy === undefined ? drawCfg.sy : pos.sy
     let width = pos.width === undefined ? drawCfg.width : pos.width
     let height = pos.height === undefined ? drawCfg.height : pos.height
-    const maxSy = state.height - height
-    const maxSx = state.width - width
-    const maxWidth = state.width - sx
-    const maxHeight = state.height - sy
+    // const maxSy = state.height - height
+    // const maxSx = state.width - width
+    // const maxWidth = state.width - sx
+    // const maxHeight = state.height - sy
 
     this.setState({
       drawCfg: Object.assign(drawCfg, {sy, sx, width, height})
